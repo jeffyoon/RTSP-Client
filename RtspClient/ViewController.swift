@@ -28,16 +28,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        video = RTSPPlayer(video: "rtsp://admin:admin@192.168.150.243", usesTcp: false)
+        video = RTSPPlayer(video: "rtsp://@192.168.0.100:554/mpeg4", usesTcp: false)
         video.outputWidth = 426
         video.outputHeight = 320
         video.seekTime(0.0)
         
-        let timer = NSTimer.scheduledTimerWithTimeInterval(1.0/30, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
+        let timer = Timer.scheduledTimer(timeInterval: 1.0/30, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
         timer.fire()
     }
     
-    func update(timer: NSTimer) {
+    func update(_ timer: Timer) {
         if(!video.stepFrame()){
             timer.invalidate()
             video.closeAudio()
